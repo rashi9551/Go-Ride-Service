@@ -1,7 +1,10 @@
 import { RideDetails } from "../entities/ride";
-import rideRepo from "../repositories/rideRepo";
-export default {
-    rideDataSave:async(rideData:RideDetails)=>{
+import rideRepository from "../repositories/rideRepo";
+
+const rideRepo=new rideRepository()
+
+export default class rideCase{
+    rideDataSave=async(rideData:RideDetails)=>{
         try {
             console.log(rideData);
             const response=await rideRepo.saveRideData(rideData)
@@ -13,7 +16,6 @@ export default {
             
         } catch (error) {
             console.log(error);
-            
         }
 
     }

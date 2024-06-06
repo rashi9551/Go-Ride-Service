@@ -1,7 +1,7 @@
 import Ride, { RideDetails } from "../entities/ride"
 
-export default{
-    saveRideData:async(rideData:RideDetails)=>{
+export default class rideRepository{
+    saveRideData=async(rideData:RideDetails)=>{
         try {
             const existingRide = await Ride.findOne({ ride_id: rideData.ride_id });
 
