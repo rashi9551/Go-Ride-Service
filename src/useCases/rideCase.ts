@@ -19,4 +19,18 @@ export default class rideCase{
         }
 
     }
+    getRideData=async(id:string)=>{
+        try {
+            const response=await rideRepo.findById(id)
+            if(response?.ride_id){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }

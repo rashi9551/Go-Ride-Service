@@ -48,6 +48,8 @@ class RabbitMQClient {
     }
 
     async produce(data: any, correlationId: string, replyToQueue: string) {
+      console.log(correlationId,replyToQueue,"ithu wue detaiks");
+      
         if (!this.isInitialized) {
           await this.initialize();
         }

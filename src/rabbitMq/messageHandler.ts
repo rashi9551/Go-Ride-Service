@@ -19,6 +19,11 @@ export default class MessageHandler {
         response=await rideControll.orderCreate(data)
         break;
 
+      case "get-current-ride":
+        response=await rideControll.getRideData(data.rideId)
+        console.log(response); 
+        break;
+
       default:
         response = "Request-key notfound";
         break;

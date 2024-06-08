@@ -21,4 +21,15 @@ export default class rideRepository{
         }
 
     }
+    findById=async(id:string)=>{
+        try {
+            const rideData = await Ride.findOne({ride_id:id});
+            return rideData
+            
+        } catch (error) {
+            console.log(error);
+            
+        }
+
+    }
 }
