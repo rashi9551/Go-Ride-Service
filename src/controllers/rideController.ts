@@ -24,5 +24,14 @@ export class rideController {
             
         }
     }
+    updateRideStatus=async(id:string)=>{ 
+        try {
+            const response = await rideCase.updateRideStatus(id);  
+            return response
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
  
 };

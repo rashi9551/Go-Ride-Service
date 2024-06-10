@@ -33,4 +33,18 @@ export default class rideCase{
         }
 
     }
+    updateRideStatus=async(id:string)=>{
+        try {
+            const response=await rideRepo.findByIdAndUpdate(id)
+            if(response?.ride_id){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }

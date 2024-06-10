@@ -24,6 +24,11 @@ export default class MessageHandler {
         console.log(response); 
         break;
 
+      case "update-ride-status":
+        response=await rideControll.updateRideStatus(data.rideId)
+        console.log(response); 
+        break;
+
       default:
         response = "Request-key notfound";
         break;

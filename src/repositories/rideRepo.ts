@@ -32,4 +32,19 @@ export default class rideRepository{
         }
 
     }
+    findByIdAndUpdate=async(id:string)=>{
+        try {
+            const rideData = await Ride.findOneAndUpdate({ride_id:id},{
+                $set:{
+                    status:"Cancelled"
+                }
+            });
+            return rideData
+            
+        } catch (error) {
+            console.log(error);
+            
+        }
+
+    }
 }
