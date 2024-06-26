@@ -47,4 +47,23 @@ export default class rideRepository{
         }
 
     }
+    confirmRideStatus=async(pin:number)=>{
+        try {
+            const rideData = await Ride.findOneAndUpdate({ pin: pin},
+                {
+                    $set: {
+                        status: "Confirmed",
+                    },
+                },
+                {
+                    new: true,
+                });
+            return rideData
+            
+        } catch (error) {
+            console.log(error);
+            
+        }
+
+    }
 }

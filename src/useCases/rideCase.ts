@@ -47,4 +47,18 @@ export default class rideCase{
         }
 
     }
+    confirmRideStatus=async(pin:number)=>{
+        try {
+            const response=await rideRepo.confirmRideStatus(pin)            
+            if(response?.ride_id){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }

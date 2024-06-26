@@ -33,5 +33,15 @@ export class rideController {
             
         }
     }
+
+    confirmRideStatus=async(pin:number)=>{ 
+        try {
+            const response = await rideCase.confirmRideStatus(pin); 
+            return response
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
  
 };

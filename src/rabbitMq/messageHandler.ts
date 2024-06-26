@@ -20,13 +20,16 @@ export default class MessageHandler {
         break;
 
       case "get-current-ride":
+        console.log("varunnundu");
         response=await rideControll.getRideData(data.rideId)
-        console.log(response); 
         break;
 
       case "update-ride-status":
         response=await rideControll.updateRideStatus(data.rideId)
-        console.log(response); 
+        break;
+
+      case "ride-confirm":
+        response=await rideControll.confirmRideStatus(data)
         break;
 
       default:
