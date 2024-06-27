@@ -66,4 +66,14 @@ export default class rideRepository{
         }
 
     }
+    getAllRide=async(id:string)=>{
+        try {
+            const rideData = await Ride.find({user_id:id});            
+            return rideData
+        } catch (error) {
+            console.log(error);
+            
+        }
+
+    }
 }

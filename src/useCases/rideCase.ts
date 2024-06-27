@@ -61,4 +61,18 @@ export default class rideCase{
         }
 
     }
+    getAllRide=async(id:string)=>{
+        try {
+            const response:RideDetails|undefined=await rideRepo.getAllRide(id)  as RideDetails|undefined         
+            if(response){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
 }

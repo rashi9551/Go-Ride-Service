@@ -25,11 +25,15 @@ export default class MessageHandler {
         break;
 
       case "update-ride-status":
-        response=await rideControll.updateRideStatus(data.rideId)
+        response=await rideControll.updateRideStatus(data.ride_id)
         break;
 
       case "ride-confirm":
         response=await rideControll.confirmRideStatus(data)
+        break;
+
+      case "get-all-ride":
+        response=await rideControll.getAllRide(data.user_id)
         break;
 
       default:
