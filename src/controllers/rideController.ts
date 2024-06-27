@@ -46,9 +46,9 @@ export class rideController {
             
         }
     }
-    getAllRide=async(id:string)=>{ 
+    getAllRide=async(id:string,message:string)=>{ 
         try {
-            const response:RideDetails = await rideCase.getAllRide(id) as RideDetails
+            const response:RideDetails = await rideCase.getAllRide(id,message) as RideDetails
             console.log(response,"all ride datas with user id")
             return response
         } catch (error) {

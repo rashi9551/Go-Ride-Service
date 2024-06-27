@@ -1,3 +1,4 @@
+import moment from "moment";
 import Ride, { RideDetails } from "../entities/ride"
 
 export default class rideRepository{
@@ -66,10 +67,24 @@ export default class rideRepository{
         }
 
     }
-    getAllRide=async(id:string)=>{
+    getAllRide=async(id:string,message:string)=>{
         try {
-            const rideData = await Ride.find({user_id:id});            
-            return rideData
+            let rideData
+            if(message==='user'){
+                rideData = await Ride.find({user_id:id}).sort({ date: -1 }); 
+                const formattedData = rideData.map((ride) => ({
+                    ...ride.toObject(),
+                    date: moment(ride.date).format("dddd, DD-MM-YYYY"),
+                }));
+                return formattedData      
+            }else if(message==='driver'){
+                rideData = await Ride.find({driver_id:id}).sort({ date: -1 });      
+                const formattedData = rideData.map((ride) => ({
+                    ...ride.toObject(),
+                    date: moment(ride.date).format("dddd, DD-MM-YYYY"),
+                }));
+                return formattedData 
+            }
         } catch (error) {
             console.log(error);
             

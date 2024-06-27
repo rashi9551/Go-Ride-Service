@@ -33,7 +33,7 @@ export default class MessageHandler {
         break;
 
       case "get-all-ride":
-        response=await rideControll.getAllRide(data.user_id)
+        response=await rideControll.getAllRide(data.id,data.message)
         break;
 
       default:

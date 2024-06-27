@@ -61,9 +61,9 @@ export default class rideCase{
         }
 
     }
-    getAllRide=async(id:string)=>{
+    getAllRide=async(id:string,message:string)=>{
         try {
-            const response:RideDetails|undefined=await rideRepo.getAllRide(id)  as RideDetails|undefined         
+            const response:RideDetails|undefined=await rideRepo.getAllRide(id,message)  as RideDetails|undefined         
             if(response){
                 return response
             }else{
