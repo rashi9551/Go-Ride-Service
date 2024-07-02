@@ -1,5 +1,7 @@
 import { RideDetails } from "../entities/ride";
 import rideRepository from "../repositories/rideRepo";
+import { Message } from "../utilities/interface";
+
 
 const rideRepo=new rideRepository()
 
@@ -72,6 +74,22 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+        }
+
+    }
+    rideCompleteUpdate=async(id:string,paymnetMode:string):Promise<Message>=>{
+        try {
+            const response:RideDetails=await rideRepo.rideCompleteUpdate(id,paymnetMode)  as RideDetails         
+            if(response?.ride_id){
+                return ({message:"Success"})
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+            return {message:"something went wrong"}
+
         }
 
     }

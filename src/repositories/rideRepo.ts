@@ -1,5 +1,6 @@
 import moment from "moment";
 import Ride, { RideDetails } from "../entities/ride"
+import { Message } from "../utilities/interface";
 
 export default class rideRepository{
     saveRideData=async(rideData:RideDetails)=>{
@@ -88,6 +89,23 @@ export default class rideRepository{
         } catch (error) {
             console.log(error);
             
+        }
+
+    }
+
+    rideCompleteUpdate=async(id:string,paymentMode:string):Promise<RideDetails|Message>=>{
+        try {
+            const rideData:RideDetails = await Ride.findOneAndUpdate(
+                { ride_id: id },
+                {
+                    paymentMode: paymentMode,
+                    status: "Completed",
+                }
+            ) as RideDetails
+            return rideData
+        } catch (error) {
+            console.log(error);
+            return ({message:"something went wrong in database save"})
         }
 
     }

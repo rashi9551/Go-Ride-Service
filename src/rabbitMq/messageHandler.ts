@@ -20,7 +20,6 @@ export default class MessageHandler {
         break;
 
       case "get-current-ride":
-        console.log("varunnundu");
         response=await rideControll.getRideData(data.rideId)
         break;
 
@@ -34,6 +33,10 @@ export default class MessageHandler {
 
       case "get-all-ride":
         response=await rideControll.getAllRide(data.id,data.message)
+        break;
+
+      case "ride-complete-update":
+        response=await rideControll.rideCompleteUpdate(data.rideId,data.paymentMode)
         break;
 
       default:

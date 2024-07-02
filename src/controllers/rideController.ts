@@ -56,5 +56,15 @@ export class rideController {
             
         }
     }
+    rideCompleteUpdate=async(id:string,paymnetMode:string)=>{ 
+        try {
+            const response = await rideCase.rideCompleteUpdate(id,paymnetMode)
+            console.log(response,"ride update message");
+            return response
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
  
 };
