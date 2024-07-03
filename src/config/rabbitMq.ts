@@ -5,7 +5,7 @@ export default {
       url: String(process.env.RabbitMqUrl),
     },
     queues: {
-        rideQueue: "rides_queue",
+        rideQueue: "ride_queue",
       }
   };
 

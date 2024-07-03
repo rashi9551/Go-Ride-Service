@@ -52,7 +52,7 @@ class RabbitMQClient {
     }
 
     async produce(data: any, correlationId: string, replyToQueue: string) {
-      
+      try {
         if (!this.isInitialized) {
           await this.initialize();
         }
@@ -61,6 +61,11 @@ class RabbitMQClient {
           correlationId,
           replyToQueue
         );
+        
+      } catch (error) {
+        console.log(error);
+        
+      }
       }
   
 }
