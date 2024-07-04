@@ -1,6 +1,6 @@
 import moment from "moment";
 import Ride, { RideDetails } from "../entities/ride"
-import { Message } from "../utilities/interface";
+import { Message, feedback } from "../utilities/interface";
 
 export default class rideRepository{
     saveRideData=async(rideData:RideDetails)=>{
@@ -25,8 +25,16 @@ export default class rideRepository{
     }
     findById=async(id:string)=>{
         try {
-            const rideData = await Ride.findOne({ride_id:id});
-            return rideData
+            const rideData = await Ride.findOne({ride_id:id}) as RideDetails
+            const formattedDate = moment(rideData.date).format('MMM/ddd/YY');
+            const updatedRideData = {
+
+                ...rideData.toObject(),
+                date: formattedDate
+            };  
+            console.log(updatedRideData,"hghfhfgh");
+            
+            return updatedRideData 
             
         } catch (error) {
             console.log(error);
@@ -103,6 +111,32 @@ export default class rideRepository{
                 }
             ) as RideDetails
             return rideData
+        } catch (error) {
+            console.log(error);
+            return ({message:"something went wrong in database save"})
+        }
+
+    }
+    feedback=async(data:feedback):Promise<Message>=>{
+        try {
+            const { rating, feedback ,_id} = data;
+
+            const rideData = await Ride.findByIdAndUpdate(
+                _id,
+                {
+                    $set: {
+                        rating: rating,
+                        feedback: feedback,
+                    },
+                },
+                { new: true }
+            ) as RideDetails
+
+            if(rideData){
+                return({message:"Success"})
+            }else{
+                return({message:"something went wrong in data base saving"})
+            }
         } catch (error) {
             console.log(error);
             return ({message:"something went wrong in database save"})

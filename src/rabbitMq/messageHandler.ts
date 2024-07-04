@@ -39,6 +39,10 @@ export default class MessageHandler {
         response=await rideControll.rideCompleteUpdate(data.rideId,data.paymentMode)
         break;
 
+      case "update-feedback":
+        response=await rideControll.feedback(data)
+        break;
+
       default:
         response = "Request-key notfound";
         break;

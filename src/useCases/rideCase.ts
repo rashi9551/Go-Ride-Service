@@ -1,6 +1,6 @@
 import { RideDetails } from "../entities/ride";
 import rideRepository from "../repositories/rideRepo";
-import { Message } from "../utilities/interface";
+import { Message, feedback } from "../utilities/interface";
 
 
 const rideRepo=new rideRepository()
@@ -23,8 +23,9 @@ export default class rideCase{
     }
     getRideData=async(id:string)=>{
         try {
-            const response=await rideRepo.findById(id)
-            if(response?.ride_id){
+            const response=await rideRepo.findById(id) as RideDetails
+            console.log(response.ride_id),"ithu ride datteteteety";
+            if(response){
                 return response
             }else{
                 return {message:"something went wrong"}
@@ -66,6 +67,20 @@ export default class rideCase{
     getAllRide=async(id:string,message:string)=>{
         try {
             const response:RideDetails|undefined=await rideRepo.getAllRide(id,message)  as RideDetails|undefined         
+            if(response){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+    feedback=async(data:feedback)=>{
+        try {
+            const response:Message|undefined=await rideRepo.feedback(data)  as Message        
             if(response){
                 return response
             }else{

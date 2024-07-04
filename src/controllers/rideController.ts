@@ -1,6 +1,7 @@
 import amqp from 'amqplib';
 import rideCases from '../useCases/rideCase';
 import { RideDetails } from '../entities/ride';
+import { feedback } from '../utilities/interface';
 
 const rideCase=new rideCases()
 
@@ -60,6 +61,16 @@ export class rideController {
         try {
             const response = await rideCase.rideCompleteUpdate(id,paymnetMode)
             console.log(response,"ride update message");
+            return response
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
+    feedback=async(data:feedback)=>{ 
+        try {
+            const response = await rideCase.feedback(data)
+            console.log(response,"feedback update message");
             return response
         } catch (error) {
             console.log(error);
