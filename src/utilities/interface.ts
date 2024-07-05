@@ -4,6 +4,7 @@ export interface Message {
 
 
   export interface feedback{
+    ride_id:string,
     _id:string,
     rating:string,
     feedback:string,

@@ -92,6 +92,20 @@ export default class rideCase{
         }
 
     }
+    dashboardData=async()=>{
+        try {
+            const response=await rideRepo.dashboardData()          
+            if(response){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
     rideCompleteUpdate=async(id:string,paymnetMode:string):Promise<Message>=>{
         try {
             const response:RideDetails=await rideRepo.rideCompleteUpdate(id,paymnetMode)  as RideDetails         

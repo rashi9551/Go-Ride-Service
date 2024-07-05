@@ -117,6 +117,39 @@ export default class rideRepository{
         }
 
     }
+    dashboardData=async()=>{
+        try {
+            
+            const rideData = await Ride
+                .aggregate([
+                    {
+                        $match: {
+                            status: { $nin: ["Cancelled", "Pending"] },
+                        },
+                    },
+                    {
+                        $group: {
+                            _id: "$paymentMode",
+                            count: { $sum: 1 },
+                        },
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            name: "$_id",
+                            value: "$count",
+                        },
+                    },
+                ])
+                .exec()
+            console.log(rideData,"djhvshjbjks"); 
+            return rideData
+        } catch (error) {
+            console.log(error);
+            return ({message:"something went wrong in database save"})
+        }
+
+    }
     feedback=async(data:feedback):Promise<Message>=>{
         try {
             const { rating, feedback ,_id} = data;

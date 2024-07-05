@@ -77,5 +77,15 @@ export class rideController {
             
         }
     }
+    dashboardData=async()=>{ 
+        try {
+            const response = await rideCase.dashboardData()
+            console.log(response,"dashbord data get");
+            return response
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
  
 };
