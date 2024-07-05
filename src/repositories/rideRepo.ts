@@ -138,7 +138,7 @@ export default class rideRepository{
                 return({message:"something went wrong in data base saving"})
             }
         } catch (error) {
-            console.log(error);
+            console.log(error );
             return ({message:"something went wrong in database save"})
         }
 
