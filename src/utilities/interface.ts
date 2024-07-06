@@ -1,6 +1,9 @@
 export interface Message {
     message: string ;
   }
+  export interface driveId{
+    driver_id:string
+  }
 
 
   export interface feedback{

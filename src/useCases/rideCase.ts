@@ -1,6 +1,6 @@
 import { RideDetails } from "../entities/ride";
 import rideRepository from "../repositories/rideRepo";
-import { Message, feedback } from "../utilities/interface";
+import { Message, driveId, feedback } from "../utilities/interface";
 
 
 const rideRepo=new rideRepository()
@@ -95,6 +95,20 @@ export default class rideCase{
     dashboardData=async()=>{
         try {
             const response=await rideRepo.dashboardData()          
+            if(response){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+    driverDashboardData=async(data:driveId)=>{
+        try {
+            const response=await rideRepo.driverDashboardData(data)          
             if(response){
                 return response
             }else{

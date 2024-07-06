@@ -47,6 +47,10 @@ export default class MessageHandler {
         response=await rideControll.dashboardData()
         break;
 
+      case "driver-get-dashboardData":
+        response=await rideControll.driverDashboardData(data)
+        break;
+
       default:
         response = "Request-key notfound";
         break;

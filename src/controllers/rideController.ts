@@ -1,7 +1,7 @@
 import amqp from 'amqplib';
 import rideCases from '../useCases/rideCase';
 import { RideDetails } from '../entities/ride';
-import { feedback } from '../utilities/interface';
+import { driveId, feedback } from '../utilities/interface';
 
 const rideCase=new rideCases()
 
@@ -81,6 +81,16 @@ export class rideController {
         try {
             const response = await rideCase.dashboardData()
             console.log(response,"dashbord data get");
+            return response
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
+    driverDashboardData=async(data:driveId)=>{ 
+        try {
+            const response = await rideCase.driverDashboardData(data)
+            console.log(response,"driver dashbord data get");
             return response
         } catch (error) {
             console.log(error);
