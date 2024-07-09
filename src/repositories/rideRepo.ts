@@ -3,15 +3,16 @@ import Ride, { RideDetails } from "../entities/ride"
 import { Message, driveId, feedback } from "../utilities/interface";
 
 export default class rideRepository{
-    saveRideData=async(rideData:RideDetails)=>{
+    saveRideData=async(rideData:RideDetails):Promise<RideDetails| string> =>{
         try {
             const existingRide = await Ride.findOne({ ride_id: rideData.ride_id });
-
             if (existingRide) {
                 console.log('Ride with this destination already exists:', existingRide);
-                return; 
+                return ""
             }
-            const newRide = new Ride(rideData);
+            const date=Date.now()
+            console.log(new Date(date+(5.5 * 60 * 60 * 1000)),"-============--=-=-=-=============----=-=-==-=-==-====-=-=-");
+            const newRide = new Ride({...rideData,date:new Date(date+(5.5 * 60 * 60 * 1000))});
             const response = await newRide.save();
             console.log('New ride saved:', response);
             console.log("data Saved");
@@ -19,47 +20,50 @@ export default class rideRepository{
             
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
 
     }
-    findById=async(id:string)=>{
+    findById=async(id:string):Promise<RideDetails| string |Message>=>{
         try {
-            const rideData = await Ride.findOne({ride_id:id}) as RideDetails
-            const formattedDate = moment(rideData.date).format('MMM/ddd/YY');
-            const updatedRideData = {
-
-                ...rideData.toObject(),
-                date: formattedDate
-            };  
-            console.log(updatedRideData,"hghfhfgh");
-            
-            return updatedRideData 
+            console.log(id,"=-=-=-=-");
+            const rideData:RideDetails = await Ride.findOne({ride_id:id}) as RideDetails
+            if(rideData){
+                const formattedDate = moment(rideData.date).format('MMM/ddd/YY');
+                const updatedRideData = {
+    
+                    ...rideData.toObject(),
+                    date: formattedDate
+                };  
+                console.log(updatedRideData,"hghfhfgh");
+                return updatedRideData 
+            }
+            return ({message:"ride not getting"})
             
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
 
     }
-    findByIdAndUpdate=async(id:string)=>{
+    findByIdAndUpdate=async(id:string):Promise<RideDetails| string>=>{
         try {
-            const rideData = await Ride.findOneAndUpdate({ride_id:id},{
+            const rideData:RideDetails = await Ride.findOneAndUpdate({ride_id:id},{
                 $set:{
                     status:"Cancelled"
                 }
-            });
+            }) as RideDetails
             return rideData
             
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
 
     }
-    confirmRideStatus=async(pin:number)=>{
+    confirmRideStatus=async(pin:number):Promise<RideDetails| string>=>{
         try {
-            const rideData = await Ride.findOneAndUpdate({ pin: pin},
+            const rideData:RideDetails= await Ride.findOneAndUpdate({ pin: pin},
                 {
                     $set: {
                         status: "Confirmed",
@@ -67,12 +71,12 @@ export default class rideRepository{
                 },
                 {
                     new: true,
-                });
+                }) as RideDetails
             return rideData
             
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
 
     }
@@ -210,25 +214,25 @@ export default class rideRepository{
             const currentDate = new Date();
             const currentMonth = currentDate.getMonth() + 1;
 
-            const count = await Ride
-                .aggregate([
-                    {
-                        $match: {
-                            status: "Completed",
-                            date: {
-                                $gte: new Date(currentDate.getFullYear(), currentMonth - 1, 1), // Start of current month
-                                $lt: new Date(currentDate.getFullYear(), currentMonth, 1), // Start of next month
-                            },
+            const count = await Ride.aggregate([
+                {
+                    $match: {
+                        status: "Completed",
+                        driver_id: driver_id, 
+                        date: {
+                            $gte: new Date(currentDate.getFullYear(), currentMonth - 1, 1),
+                            $lt: new Date(currentDate.getFullYear(), currentMonth, 1), 
                         },
                     },
-                    {
-                        $group: {
-                            _id: null,
-                            totalCount: { $sum: 1 },
-                        },
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalCount: { $sum: 1 },
                     },
-                ])
-                .exec();                
+                },
+            ]).exec();
+                           
                 return {count,pieChartData,data}
             
         } catch (error) {

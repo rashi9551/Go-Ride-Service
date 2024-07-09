@@ -6,10 +6,10 @@ import { Message, driveId, feedback } from "../utilities/interface";
 const rideRepo=new rideRepository()
 
 export default class rideCase{
-    rideDataSave=async(rideData:RideDetails)=>{
+    rideDataSave=async(rideData:RideDetails):Promise<Message | string>=>{
         try {
             console.log(rideData);
-            const response=await rideRepo.saveRideData(rideData)
+            const response :RideDetails =await rideRepo.saveRideData(rideData) as RideDetails
             if(response?.ride_id){
                 return {message:"Success"}
             }else{
@@ -18,10 +18,10 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return(error as Error).message
         }
-
     }
-    getRideData=async(id:string)=>{
+    getRideData=async(id:string):Promise<RideDetails| Message |string>=>{
         try {
             const response=await rideRepo.findById(id) as RideDetails
             console.log(response.ride_id),"ithu ride datteteteety";
@@ -33,12 +33,12 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return(error as Error).message
         }
-
     }
-    updateRideStatus=async(id:string)=>{
+    updateRideStatus=async(id:string):Promise<RideDetails| string |Message>=>{
         try {
-            const response=await rideRepo.findByIdAndUpdate(id)
+            const response :RideDetails=await rideRepo.findByIdAndUpdate(id) as RideDetails
             if(response?.ride_id){
                 return response
             }else{
@@ -47,12 +47,13 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return (error as Error).message
         }
 
     }
-    confirmRideStatus=async(pin:number)=>{
+    confirmRideStatus=async(pin:number):Promise<RideDetails| string |Message>=>{
         try {
-            const response=await rideRepo.confirmRideStatus(pin)            
+            const response : RideDetails=await rideRepo.confirmRideStatus(pin) as RideDetails      
             if(response?.ride_id){
                 return response
             }else{
@@ -61,6 +62,7 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return (error as Error).message
         }
 
     }
@@ -75,12 +77,13 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return (error as Error).message
         }
 
     }
-    feedback=async(data:feedback)=>{
+    feedback=async(data:feedback):Promise<Message | string>=>{
         try {
-            const response:Message|undefined=await rideRepo.feedback(data)  as Message        
+            const response:Message=await rideRepo.feedback(data)  as Message        
             if(response){
                 return response
             }else{
@@ -89,6 +92,7 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return (error as Error).message
         }
 
     }
@@ -103,6 +107,7 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return (error as Error).message
         }
 
     }
@@ -117,10 +122,11 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
+            return (error as Error).message
         }
 
     }
-    rideCompleteUpdate=async(id:string,paymnetMode:string):Promise<Message>=>{
+    rideCompleteUpdate=async(id:string,paymnetMode:string):Promise<Message | string>=>{
         try {
             const response:RideDetails=await rideRepo.rideCompleteUpdate(id,paymnetMode)  as RideDetails         
             if(response?.ride_id){
@@ -131,8 +137,7 @@ export default class rideCase{
             
         } catch (error) {
             console.log(error);
-            return {message:"something went wrong"}
-
+            return (error as Error).message
         }
 
     }

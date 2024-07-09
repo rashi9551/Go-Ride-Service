@@ -1,12 +1,12 @@
 import amqp from 'amqplib';
 import rideCases from '../useCases/rideCase';
 import { RideDetails } from '../entities/ride';
-import { driveId, feedback } from '../utilities/interface';
+import { driveId, feedback, Message } from '../utilities/interface';
 
 const rideCase=new rideCases()
 
 export class rideController {
-    orderCreate=async(data:RideDetails)=>{ 
+    orderCreate=async(data:RideDetails):Promise<Message |string>=>{ 
         try {
             console.log(data),"from controller";
             const response = await rideCase.rideDataSave(data);  
@@ -14,37 +14,37 @@ export class rideController {
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
-    getRideData=async(id:string)=>{ 
+    getRideData=async(id:string):Promise<RideDetails| Message |string>=>{ 
         try {
             const response = await rideCase.getRideData(id);  
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
-    updateRideStatus=async(id:string)=>{ 
+    updateRideStatus=async(id:string):Promise<RideDetails| string |Message>=>{ 
         try {
-            const response = await rideCase.updateRideStatus(id);  
+            const response :RideDetails |Message = await rideCase.updateRideStatus(id) as RideDetails | Message
             console.log(response,"ride data updated")
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
 
-    confirmRideStatus=async(pin:number)=>{ 
+    confirmRideStatus=async(pin:number):Promise<RideDetails| string |Message>=>{ 
         try {
             const response = await rideCase.confirmRideStatus(pin); 
             console.log(response,"ride data confirmed")
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
     getAllRide=async(id:string,message:string)=>{ 
@@ -54,7 +54,7 @@ export class rideController {
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
     rideCompleteUpdate=async(id:string,paymnetMode:string)=>{ 
@@ -64,7 +64,7 @@ export class rideController {
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
     feedback=async(data:feedback)=>{ 
@@ -74,7 +74,7 @@ export class rideController {
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
     dashboardData=async()=>{ 
@@ -84,7 +84,7 @@ export class rideController {
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
     driverDashboardData=async(data:driveId)=>{ 
@@ -94,7 +94,7 @@ export class rideController {
             return response
         } catch (error) {
             console.log(error);
-            
+            return(error as Error).message
         }
     }
  

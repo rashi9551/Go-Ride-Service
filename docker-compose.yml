@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  ride-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    env_file:
+      - .env
