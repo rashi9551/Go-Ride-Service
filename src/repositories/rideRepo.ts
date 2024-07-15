@@ -1,6 +1,6 @@
 import moment from "moment";
 import Ride, { RideDetails } from "../entities/ride"
-import { Message, driveId, feedback } from "../utilities/interface";
+import { Message, driveId, feedback, report } from "../utilities/interface";
 
 export default class rideRepository{
     saveRideData=async(rideData:RideDetails):Promise<RideDetails| string> =>{
@@ -251,6 +251,31 @@ export default class rideRepository{
                     $set: {
                         rating: rating,
                         feedback: feedback,
+                    },
+                },
+                { new: true }
+            ) as RideDetails
+
+            if(rideData){
+                return({message:"Success"})
+            }else{
+                return({message:"something went wrong in data base saving"})
+            }
+        } catch (error) {
+            console.log(error );
+            return ({message:"something went wrong in database save"})
+        }
+
+    }
+    report=async(data:report):Promise<Message>=>{
+        try {
+            const { reason ,_id} = data;
+
+            const rideData = await Ride.findByIdAndUpdate(
+                _id,
+                {
+                    $set: {
+                        reportReason: reason,
                     },
                 },
                 { new: true }

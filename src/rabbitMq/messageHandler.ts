@@ -43,6 +43,10 @@ export default class MessageHandler {
         response=await rideControll.feedback(data)
         break;
 
+      case "update-report":
+        response=await rideControll.report(data)
+        break;
+
       case "get-dashboardData":
         response=await rideControll.dashboardData()
         break;

@@ -21,6 +21,7 @@ export interface RideDetails extends Document {
     pin: number;
     paymentMode: string;
     feedback?: string;
+    reportReason?: string;
     rating?: number;
 }
 
@@ -100,6 +101,9 @@ const RideSchema: Schema = new Schema({
         type: Number,
     },
     feedback:{
+        type:String
+    },
+    reportReason:{
         type:String
     },
     rating:{

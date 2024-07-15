@@ -1,7 +1,7 @@
 import amqp from 'amqplib';
 import rideCases from '../useCases/rideCase';
 import { RideDetails } from '../entities/ride';
-import { driveId, feedback, Message } from '../utilities/interface';
+import { driveId, feedback, Message, report } from '../utilities/interface';
 
 const rideCase=new rideCases()
 
@@ -71,6 +71,17 @@ export class rideController {
         try {
             const response = await rideCase.feedback(data)
             console.log(response,"feedback update message");
+            return response
+        } catch (error) {
+            console.log(error);
+            return(error as Error).message
+        }
+    }
+
+    report=async(data:report)=>{ 
+        try {
+            const response = await rideCase.report(data)
+            console.log(response,"report update message");
             return response
         } catch (error) {
             console.log(error);

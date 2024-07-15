@@ -1,6 +1,6 @@
 import { RideDetails } from "../entities/ride";
 import rideRepository from "../repositories/rideRepo";
-import { Message, driveId, feedback } from "../utilities/interface";
+import { Message, driveId, feedback, report } from "../utilities/interface";
 
 
 const rideRepo=new rideRepository()
@@ -84,6 +84,21 @@ export default class rideCase{
     feedback=async(data:feedback):Promise<Message | string>=>{
         try {
             const response:Message=await rideRepo.feedback(data)  as Message        
+            if(response){
+                return response
+            }else{
+                return {message:"something went wrong"}
+            }
+            
+        } catch (error) {
+            console.log(error);
+            return (error as Error).message
+        }
+
+    }
+    report=async(data:report):Promise<Message | string>=>{
+        try {
+            const response:Message=await rideRepo.report(data)  as Message        
             if(response){
                 return response
             }else{
